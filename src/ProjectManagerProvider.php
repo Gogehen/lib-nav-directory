@@ -1,5 +1,7 @@
 <?php
 
+namespace PhpSquad\NavDirectory;
+
 use Illuminate\Support\ServiceProvider;
 
 class ProjectManagerProvider extends ServiceProvider

@@ -1,11 +1,11 @@
 <?php
 
 
-namespace PhpSquad\DirectoryCreator\Repositories;
+namespace PhpSquad\NavDirectory\Repositories;
 
 
 use Illuminate\Database\Capsule\Manager;
-use PhpSquad\DirectoryCreator\Models\Directory;
+use PhpSquad\NavDirectory\Models\Directory;
 
 class DirectoryRepository
 {

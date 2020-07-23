@@ -1,15 +1,15 @@
 <?php
 
-namespace PhpSquad\DirectoryCreator\Tests\Integration;
+namespace PhpSquad\NavDirectory\Tests\Integration;
 
 use Illuminate\Database\Capsule\Manager;
-use PhpSquad\DirectoryCreator\Repositories\DirectoryRepository;
-use PhpSquad\DirectoryCreator\Services\DirectoryCreator;
-use PhpSquad\DirectoryCreator\Tests\TestDatabase;
+use PhpSquad\NavDirectory\Repositories\DirectoryRepository;
+use PhpSquad\NavDirectory\Services\NavDirectory;
+use PhpSquad\NavDirectory\Tests\TestDatabase;
 use PHPUnit\Framework\TestCase;
 
 
-class DirectoryCreatorTest extends TestCase
+class NavDirectoryTest extends TestCase
 {
     use TestBase;
 
@@ -26,7 +26,7 @@ class DirectoryCreatorTest extends TestCase
     public function testCreateDirectory()
     {
         $directoryRepository = new DirectoryRepository($this->database);
-        $directoryCreator = new DirectoryCreator($directoryRepository);
+        $directoryCreator = new NavDirectory($directoryRepository);
 
         $directoryCreator->create('my-uuid', 'parent-uuid-1', 'team', 'Rocket Team');
 
@@ -40,7 +40,7 @@ class DirectoryCreatorTest extends TestCase
     public function testGetNestedDirectories()
     {
         $directoryRepository = new DirectoryRepository($this->database);
-        $directoryCreator = new DirectoryCreator($directoryRepository);
+        $directoryCreator = new NavDirectory($directoryRepository);
 
         $accountId = 'my-uuid';
 

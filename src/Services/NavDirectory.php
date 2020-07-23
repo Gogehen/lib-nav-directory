@@ -1,12 +1,12 @@
 <?php
 
-namespace PhpSquad\DirectoryCreator\Services;
+namespace PhpSquad\NavDirectory\Services;
 
 
-use PhpSquad\DirectoryCreator\Models\Directory;
-use PhpSquad\DirectoryCreator\Repositories\DirectoryRepository;
+use PhpSquad\NavDirectory\Models\Directory;
+use PhpSquad\NavDirectory\Repositories\DirectoryRepository;
 
-class DirectoryCreator
+class NavDirectory
 {
     private DirectoryRepository $directoryRepository;
 

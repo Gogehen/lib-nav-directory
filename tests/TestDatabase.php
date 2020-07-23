@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpSquad\DirectoryCreator\Tests;
+namespace PhpSquad\NavDirectory\Tests;
 
 use Illuminate\Database\Capsule\Manager;
 

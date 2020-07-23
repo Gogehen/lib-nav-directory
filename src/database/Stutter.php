@@ -1,7 +1,7 @@
 <?php
 
 
-namespace PhpSquad\DirectoryCreator\database;
+namespace PhpSquad\NavDirectory\database;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Stutter

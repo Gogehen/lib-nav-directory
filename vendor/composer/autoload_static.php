@@ -57,8 +57,8 @@ class ComposerStaticInit13d93fc385042bdbd21c41d49a9cd10e
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Container\\' => 14,
             'Prophecy\\' => 9,
-            'PhpSquad\\DirectoryCreator\\Tests\\' => 32,
-            'PhpSquad\\DirectoryCreator\\' => 26,
+            'PhpSquad\\NavDirectory\\Tests\\' => 28,
+            'PhpSquad\\NavDirectory\\' => 22,
         ),
         'I' => 
         array (
@@ -166,11 +166,11 @@ class ComposerStaticInit13d93fc385042bdbd21c41d49a9cd10e
         array (
             0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
         ),
-        'PhpSquad\\DirectoryCreator\\Tests\\' => 
+        'PhpSquad\\NavDirectory\\Tests\\' => 
         array (
             0 => __DIR__ . '/../..' . '/tests',
         ),
-        'PhpSquad\\DirectoryCreator\\' => 
+        'PhpSquad\\NavDirectory\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

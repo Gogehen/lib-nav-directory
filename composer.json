@@ -24,12 +24,12 @@
   },
   "autoload": {
     "psr-4": {
-      "PhpSquad\\DirectoryCreator\\": "src/"
+      "PhpSquad\\NavDirectory\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "PhpSquad\\DirectoryCreator\\Tests\\": "tests/"
+      "PhpSquad\\NavDirectory\\Tests\\": "tests/"
     }
   }
 }

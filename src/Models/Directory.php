@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpSquad\DirectoryCreator\Models;
+namespace PhpSquad\NavDirectory\Models;
 
 class Directory extends BaseModel
 {

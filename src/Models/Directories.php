@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpSquad\DirectoryCreator\Models;
+namespace PhpSquad\NavDirectory\Models;
 
 use Spatie\DataTransferObject\DataTransferObjectCollection;
 

@@ -2,7 +2,6 @@
 
 namespace PhpSquad\NavDirectory\Services;
 
-
 use PhpSquad\NavDirectory\Models\Directory;
 use PhpSquad\NavDirectory\Repositories\DirectoryRepository;
 

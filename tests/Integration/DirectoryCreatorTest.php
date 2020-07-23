@@ -3,8 +3,6 @@
 namespace PhpSquad\DirectoryCreator\Tests\Integration;
 
 use Illuminate\Database\Capsule\Manager;
-use Illuminate\Database\ConnectionInterface;
-use Illuminate\Database\Schema\Blueprint;
 use PhpSquad\DirectoryCreator\Repositories\DirectoryRepository;
 use PhpSquad\DirectoryCreator\Services\DirectoryCreator;
 use PhpSquad\DirectoryCreator\Tests\TestDatabase;

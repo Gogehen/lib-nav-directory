@@ -2,6 +2,7 @@
   "name": "phpsquad/directory-creator",
   "description": "Creates Directories for ProjectManager",
   "type": "library",
+  "license": "MIT",
   "authors": [
     {
       "name": "Richard Rohrig",

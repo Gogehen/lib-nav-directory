@@ -11,6 +11,6 @@ class Directory extends BaseModel
 
     public function folders()
     {
-        return $this->hasMany(Directory::class, 'parent_id', 'id')->with('children');
+        return $this->hasMany(Directory::class, 'parent_id', 'id')->with('projects');
     }
 }

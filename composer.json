@@ -1,5 +1,5 @@
 {
-  "name": "phpsquad/directory-creator",
+  "name": "phpsquad/nav-directory",
   "description": "Creates Directories for ProjectManager",
   "type": "library",
   "license": "MIT",

@@ -24,7 +24,7 @@ class DirectoryRepository
     {
         return Directory::where('account_id', '=', $accountId)
             ->where('parent_id', '=', 'base_nav_element')
-            ->with('lineage')
+            ->with('projects')
             ->get();
     }
 }

@@ -64,14 +64,14 @@ class NavDirectoryTest extends TestCase
                     "type" => "team",
                     "name" => "Rocket Team",
                     "parent_id" => "base_nav_element",
-                    "lineage" => [
+                    "projects" => [
                         [
                             "id" => "01bafb75-11c3-4c1e-921c-45ad13218b6f",
                             "account_id" => "my-uuid",
                             "type" => "project",
                             "name" => "Rocket Project",
                             "parent_id" => "80a5dcaf-a344-45d4-8fc8-01d4a609480c",
-                            "children" => [
+                            "folders" => [
                                 [
                                     "id" => "13b9f41a-8182-4c19-8a85-b7c1d80862dc",
                                     "account_id" => "my-uuid",

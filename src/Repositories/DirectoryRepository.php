@@ -1,22 +1,11 @@
 <?php
 
-
 namespace PhpSquad\NavDirectory\Repositories;
 
-
-use Illuminate\Database\Capsule\Manager;
 use PhpSquad\NavDirectory\Models\Directory;
 
 class DirectoryRepository
 {
-    const NAV_DIRECTORY_TABLE = 'nav_directories';
-    private Manager $database;
-
-    public function __construct(Manager $database)
-    {
-        $this->database = $database;
-    }
-
     public function create(string $accountId, ?string $parentId, string $type, string $name): Directory
     {
         $parentId = $parentId ? $parentId : 'base_nav_element';
@@ -35,7 +24,7 @@ class DirectoryRepository
     {
         return Directory::where('account_id', '=', $accountId)
             ->where('parent_id', '=', 'base_nav_element')
-            ->with('lineage')
+            ->with('projects')
             ->get();
     }
 }

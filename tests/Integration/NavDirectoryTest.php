@@ -25,7 +25,7 @@ class NavDirectoryTest extends TestCase
 
     public function testCreateDirectory()
     {
-        $directoryRepository = new DirectoryRepository($this->database);
+        $directoryRepository = new DirectoryRepository();
         $directoryCreator = new NavDirectory($directoryRepository);
 
         $directoryCreator->create('my-uuid', 'parent-uuid-1', 'team', 'Rocket Team');
@@ -39,7 +39,7 @@ class NavDirectoryTest extends TestCase
 
     public function testGetNestedDirectories()
     {
-        $directoryRepository = new DirectoryRepository($this->database);
+        $directoryRepository = new DirectoryRepository();
         $directoryCreator = new NavDirectory($directoryRepository);
 
         $accountId = 'my-uuid';

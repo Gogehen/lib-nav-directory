@@ -4,13 +4,8 @@ namespace PhpSquad\NavDirectory\Models;
 
 class Directory extends BaseModel
 {
-    public function folders()
+    public function children()
     {
-        return $this->hasMany(Directory::class, 'parent_id', 'id');
-    }
-
-    public function projects()
-    {
-        return $this->hasMany(Directory::class, 'parent_id', 'id')->with('folders');
+        return $this->hasMany(self::class, 'parent_id','id')->with('children');
     }
 }

@@ -57,10 +57,25 @@ class NavDirectoryTest extends TestCase
         $projectDir = $navDirectory->create($accountId, $teamId, $projectDirType, $projectDirName);
         $projectId = $projectDir->id;
 
-        $folderDirName = 'Rocket Folder';
-        $folderDirType = 'folder';
-        $folderDir = $navDirectory->create($accountId, $projectId, $folderDirType, $folderDirName);
-        $folderId = $folderDir->id;
+        $rocketFolderDirName = 'Rocket Folder';
+        $rocketFolderDirType = 'folder';
+        $folderDir = $navDirectory->create($accountId, $projectId, $rocketFolderDirType, $rocketFolderDirName);
+        $rocketFolderId = $folderDir->id;
+
+        $shipFolderDirName = 'Ship Folder';
+        $shipFolderDirType = 'folder';
+        $folderDir = $navDirectory->create($accountId, $projectId, $shipFolderDirType, $shipFolderDirName);
+        $shipFolderId = $folderDir->id;
+
+        $subShipFolderDirName = 'Sub Ship Folder';
+        $subShipFolderDirType = 'folder';
+        $folderDir = $navDirectory->create($accountId, $shipFolderId, $subShipFolderDirType, $subShipFolderDirName);
+        $subShipFolderId = $folderDir->id;
+
+        $subSubShipFolderDirName = 'Sub-Sub Ship Folder';
+        $subSubShipFolderDirType = 'folder';
+        $folderDir = $navDirectory->create($accountId, $subShipFolderId, $subSubShipFolderDirType, $subSubShipFolderDirName);
+        $subSubShipFolderId = $folderDir->id;
 
         $directories = $navDirectory->getDirectories($accountId);
 
@@ -74,7 +89,7 @@ class NavDirectoryTest extends TestCase
                     "parent_id" => $baseElementId,
                     "created_at" => $createdAt,
                     "updated_at" => $createdAt,
-                    "projects" => [
+                    "children" => [
                         [
                             "id" => $projectId,
                             "account_id" => $accountId,
@@ -83,15 +98,49 @@ class NavDirectoryTest extends TestCase
                             "parent_id" => $teamId,
                             "created_at" => $createdAt,
                             "updated_at" => $createdAt,
-                            "folders" => [
+                            "children" => [
                                 [
-                                    "id" => $folderId,
+                                    "id" => $rocketFolderId,
                                     "account_id" => $accountId,
-                                    "type" => $folderDirType,
-                                    "name" => $folderDirName,
+                                    "type" => $rocketFolderDirType,
+                                    "name" => $rocketFolderDirName,
                                     "parent_id" => $projectId,
                                     "created_at" => $createdAt,
                                     "updated_at" => $createdAt,
+                                    "children" => []
+                                ]
+                                ,
+                                [
+                                    "id" => $shipFolderId,
+                                    "account_id" => $accountId,
+                                    "type" => $shipFolderDirType,
+                                    "name" => $shipFolderDirName,
+                                    "parent_id" => $projectId,
+                                    "created_at" => $createdAt,
+                                    "updated_at" => $createdAt,
+                                    "children" => [
+                                        [
+                                            "id" => $subShipFolderId,
+                                            "account_id" => $accountId,
+                                            "type" => $subShipFolderDirType,
+                                            "name" => $subShipFolderDirName,
+                                            "parent_id" => $shipFolderId,
+                                            "created_at" => $createdAt,
+                                            "updated_at" => $createdAt,
+                                            "children" => [
+                                                [
+                                                    "id" => $subSubShipFolderId,
+                                                    "account_id" => $accountId,
+                                                    "type" => $subSubShipFolderDirType,
+                                                    "name" => $subSubShipFolderDirName,
+                                                    "parent_id" => $subShipFolderId,
+                                                    "created_at" => $createdAt,
+                                                    "updated_at" => $createdAt,
+                                                    "children" => []
+                                                ]
+                                            ]
+                                        ]
+                                    ]
                                 ]
                             ]
                         ]
@@ -155,7 +204,7 @@ class NavDirectoryTest extends TestCase
                     "parent_id" => $baseElementId,
                     "created_at" => $createdAt,
                     "updated_at" => $createdAt,
-                    "projects" => [
+                    "children" => [
                         [
                             "id" => $projectId,
                             "account_id" => $accountId,
@@ -164,7 +213,7 @@ class NavDirectoryTest extends TestCase
                             "parent_id" => $teamId,
                             "created_at" => $createdAt,
                             "updated_at" => $createdAt,
-                            "folders" => []
+                            "children" => []
                         ],
                         [
                             "id" => $projectId2,
@@ -174,7 +223,7 @@ class NavDirectoryTest extends TestCase
                             "parent_id" => $teamId,
                             "created_at" => $createdAt,
                             "updated_at" => $createdAt,
-                            "folders" => [
+                            "children" => [
                                 [
                                     "id" => $folderId,
                                     "account_id" => $accountId,
@@ -183,6 +232,7 @@ class NavDirectoryTest extends TestCase
                                     "parent_id" => $projectId2,
                                     "created_at" => $createdAt,
                                     "updated_at" => $createdAt,
+                                    "children" => [],
                                 ]
                             ]
                         ]

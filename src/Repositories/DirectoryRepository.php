@@ -27,4 +27,17 @@ class DirectoryRepository
             ->with('projects')
             ->get();
     }
+
+    public function update(object $data)
+    {
+        $dir = Directory::find($data->id);
+        $dir->account_id = $data->accountId;
+        $dir->parent_id = $data->parentId;
+        $dir->type = $data->type;
+        $dir->name =$data->name;
+        $dir->save();
+
+        return $dir;
+
+    }
 }

@@ -40,50 +40,147 @@ class NavDirectoryTest extends TestCase
     public function testGetNestedDirectories()
     {
         $directoryRepository = new DirectoryRepository();
-        $directoryCreator = new NavDirectory($directoryRepository);
+        $navDirectory = new NavDirectory($directoryRepository);
 
         $accountId = 'my-uuid';
+        $teamDirName = 'Rocket Team';
+        $teamDirType = 'team';
+        $baseElementId = "base_nav_element";
 
-        $baseDir = $directoryCreator->create($accountId, null, 'team', 'Rocket Team');
+        $teamDir = $navDirectory->create($accountId, null, $teamDirType, $teamDirName);
+        $teamId = $teamDir->id;
+        $createdAt = $teamDir->created_at;
 
-        $teamId = $baseDir->id;
-        $createdAt = $baseDir->created_at;
 
-        $projectDir = $directoryCreator->create($accountId, $teamId, 'project', 'Rocket Project');
-
+        $projectDirName = 'Rocket Project';
+        $projectDirType = 'project';
+        $projectDir = $navDirectory->create($accountId, $teamId, $projectDirType, $projectDirName);
         $projectId = $projectDir->id;
 
-        $folder = $directoryCreator->create($accountId, $projectId, 'folder', 'Rocket Folder');
-        $folderId = $folder->id;
+        $folderDirName = 'Rocket Folder';
+        $folderDirType = 'folder';
+        $folderDir = $navDirectory->create($accountId, $projectId, $folderDirType, $folderDirName);
+        $folderId = $folderDir->id;
 
-        $directories = $directoryCreator->getDirectories($accountId);
+        $directories = $navDirectory->getDirectories($accountId);
 
         $this->assertJsonStringEqualsJsonString(
             json_encode([
                 [
                     "id" => $teamId,
-                    "account_id" => "my-uuid",
-                    "type" => "team",
-                    "name" => "Rocket Team",
-                    "parent_id" => "base_nav_element",
+                    "account_id" => $accountId,
+                    "type" => $teamDirType,
+                    "name" => $teamDirName,
+                    "parent_id" => $baseElementId,
                     "created_at" => $createdAt,
                     "updated_at" => $createdAt,
                     "projects" => [
                         [
                             "id" => $projectId,
-                            "account_id" => "my-uuid",
-                            "type" => "project",
-                            "name" => "Rocket Project",
+                            "account_id" => $accountId,
+                            "type" => $projectDirType,
+                            "name" => $projectDirName,
                             "parent_id" => $teamId,
                             "created_at" => $createdAt,
                             "updated_at" => $createdAt,
                             "folders" => [
                                 [
                                     "id" => $folderId,
-                                    "account_id" => "my-uuid",
-                                    "type" => "folder",
-                                    "name" => "Rocket Folder",
+                                    "account_id" => $accountId,
+                                    "type" => $folderDirType,
+                                    "name" => $folderDirName,
                                     "parent_id" => $projectId,
+                                    "created_at" => $createdAt,
+                                    "updated_at" => $createdAt,
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]), $directories);
+    }
+
+    public function testUpdateWithMoveToDifferentParent()
+    {
+        $directoryRepository = new DirectoryRepository();
+        $navDirectory = new NavDirectory($directoryRepository);
+
+        $accountId = 'my-uuid';
+        $teamDirName = 'Rocket Team';
+        $teamDirType = 'team';
+        $baseElementId = "base_nav_element";
+
+        $teamDir = $navDirectory->create($accountId, null, $teamDirType, $teamDirName);
+        $teamId = $teamDir->id;
+        $createdAt = $teamDir->created_at;
+
+
+        $projectDirName = 'Rocket Project';
+        $projectDirType = 'project';
+        $projectDir = $navDirectory->create($accountId, $teamId, $projectDirType, $projectDirName);
+        $projectId = $projectDir->id;
+
+        $projectDirName2 = 'Ship Project';
+        $projectDirType2 = 'project';
+        $projectDir2 = $navDirectory->create($accountId, $teamId, $projectDirType2, $projectDirName2);
+        $projectId2 = $projectDir2->id;
+
+        $folderDirName = 'Rocket Folder';
+        $folderDirType = 'folder';
+        $folderDir = $navDirectory->create($accountId, $projectId, $folderDirType, $folderDirName);
+        $folderId = $folderDir->id;
+
+        $newFolderDirName = 'Updated Folder Name';
+
+        $data = (object) [
+            'accountId' => $accountId,
+            'id' => $folderId,
+            'parentId' => $projectId2,
+            'type' => $folderDirType,
+            'name' => $newFolderDirName
+        ];
+
+        $navDirectory->update($data);
+
+
+        $directories = $navDirectory->getDirectories($accountId);
+
+        $this->assertJsonStringEqualsJsonString(
+            json_encode([
+                [
+                    "id" => $teamId,
+                    "account_id" => $accountId,
+                    "type" => $teamDirType,
+                    "name" => $teamDirName,
+                    "parent_id" => $baseElementId,
+                    "created_at" => $createdAt,
+                    "updated_at" => $createdAt,
+                    "projects" => [
+                        [
+                            "id" => $projectId,
+                            "account_id" => $accountId,
+                            "type" => $projectDirType,
+                            "name" => $projectDirName,
+                            "parent_id" => $teamId,
+                            "created_at" => $createdAt,
+                            "updated_at" => $createdAt,
+                            "folders" => []
+                        ],
+                        [
+                            "id" => $projectId2,
+                            "account_id" => $accountId,
+                            "type" => $projectDirType2,
+                            "name" => $projectDirName2,
+                            "parent_id" => $teamId,
+                            "created_at" => $createdAt,
+                            "updated_at" => $createdAt,
+                            "folders" => [
+                                [
+                                    "id" => $folderId,
+                                    "account_id" => $accountId,
+                                    "type" => $folderDirType,
+                                    "name" => $newFolderDirName,
+                                    "parent_id" => $projectId2,
                                     "created_at" => $createdAt,
                                     "updated_at" => $createdAt,
                                 ]

@@ -21,7 +21,12 @@ class NavDirectory
 
     public function getDirectories(string $accountId)
     {
-       return  $this->directoryRepository->getDirectories($accountId);
+        return $this->directoryRepository->getDirectories($accountId);
+    }
+
+    public function update(object $data)
+    {
+        return $this->directoryRepository->update($data);
     }
 
 }

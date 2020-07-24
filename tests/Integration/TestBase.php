@@ -11,6 +11,7 @@ Trait TestBase
     {
         Manager::schema()->dropAllTables();
 
+
         Manager::schema()->create(self::NAV_DIRECTORY_TABLE, function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->uuid('account_id');

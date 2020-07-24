@@ -1,27 +1,32 @@
 [
-  [
-    "id" =>  "80a5dcaf-a344-45d4-8fc8-01d4a609480c",
-    "account_id" =>  "my-uuid",
-    "type" =>  "team",
-    "name" =>  "Rocket Team",
-    "parent_id" =>  "base_nav_element",
-    "lineage" =>  [
-      [
-        "id" =>  "01bafb75-11c3-4c1e-921c-45ad13218b6f",
-        "account_id" =>  "my-uuid",
-        "type" =>  "project",
-        "name" =>  "Rocket Project",
-        "parent_id" =>  "80a5dcaf-a344-45d4-8fc8-01d4a609480c",
-        "children" =>  [
-          [
-            "id" =>  "13b9f41a-8182-4c19-8a85-b7c1d80862dc",
-            "account_id" =>  "my-uuid",
-            "type" =>  "folder",
-            "name" =>  "Rocket Folder",
-            "parent_id" =>  "01bafb75-11c3-4c1e-921c-45ad13218b6f",
-          ]
+  {
+    "id": "89f5b2cb-928c-4c47-959d-6087c17705bc",
+    "account_id": "my-uuid",
+    "type": "team",
+    "name": "Rocket Team",
+    "parent_id": "base_nav_element",
+    "created_at": "2020-07-24T12:26:50.000000Z",
+    "updated_at": "2020-07-24T12:26:50.000000Z",
+    "projects": [
+      {
+        "id": "0d5e4168-b578-4447-98c5-fc286d0db46f",
+        "account_id": "my-uuid",
+        "type": "project",
+        "name": "Rocket Project",
+        "parent_id": "89f5b2cb-928c-4c47-959d-6087c17705bc",
+        "created_at": "2020-07-24T12:26:50.000000Z",
+        "updated_at": "2020-07-24T12:26:50.000000Z",
+        "folders": [
+          {
+            "id": "92c50314-f1b7-4a55-967b-8baee6c851b3",
+            "account_id": "my-uuid",
+            "type": "folder",
+            "name": "Rocket Folder",
+            "parent_id": "0d5e4168-b578-4447-98c5-fc286d0db46f",
+            "created_at": "2020-07-24T12:26:50.000000Z",
+            "updated_at": "2020-07-24T12:26:50.000000Z"
+          }
         ]
-      ]
+      }
     ]
-  ]
-]
+  },

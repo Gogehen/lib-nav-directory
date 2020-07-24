@@ -46,38 +46,46 @@ class NavDirectoryTest extends TestCase
 
         $baseDir = $directoryCreator->create($accountId, null, 'team', 'Rocket Team');
 
-        $parentId = $baseDir->id;
+        $teamId = $baseDir->id;
+        $createdAt = $baseDir->created_at;
 
-        $projectDir = $directoryCreator->create($accountId, $parentId, 'project', 'Rocket Project');
+        $projectDir = $directoryCreator->create($accountId, $teamId, 'project', 'Rocket Project');
 
-        $parentId = $projectDir->id;
+        $projectId = $projectDir->id;
 
-        $projectDir = $directoryCreator->create($accountId, $parentId, 'folder', 'Rocket Folder');
+        $folder = $directoryCreator->create($accountId, $projectId, 'folder', 'Rocket Folder');
+        $folderId = $folder->id;
 
         $directories = $directoryCreator->getDirectories($accountId);
 
-        $this->assertJson(
+        $this->assertJsonStringEqualsJsonString(
             json_encode([
                 [
-                    "id" => "80a5dcaf-a344-45d4-8fc8-01d4a609480c",
+                    "id" => $teamId,
                     "account_id" => "my-uuid",
                     "type" => "team",
                     "name" => "Rocket Team",
                     "parent_id" => "base_nav_element",
+                    "created_at" => $createdAt,
+                    "updated_at" => $createdAt,
                     "projects" => [
                         [
-                            "id" => "01bafb75-11c3-4c1e-921c-45ad13218b6f",
+                            "id" => $projectId,
                             "account_id" => "my-uuid",
                             "type" => "project",
                             "name" => "Rocket Project",
-                            "parent_id" => "80a5dcaf-a344-45d4-8fc8-01d4a609480c",
+                            "parent_id" => $teamId,
+                            "created_at" => $createdAt,
+                            "updated_at" => $createdAt,
                             "folders" => [
                                 [
-                                    "id" => "13b9f41a-8182-4c19-8a85-b7c1d80862dc",
+                                    "id" => $folderId,
                                     "account_id" => "my-uuid",
                                     "type" => "folder",
                                     "name" => "Rocket Folder",
-                                    "parent_id" => "01bafb75-11c3-4c1e-921c-45ad13218b6f",
+                                    "parent_id" => $projectId,
+                                    "created_at" => $createdAt,
+                                    "updated_at" => $createdAt,
                                 ]
                             ]
                         ]

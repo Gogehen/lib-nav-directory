@@ -37,7 +37,7 @@ class NavDirectoryTest extends TestCase
         $this->assertEquals('Rocket Team', $record->name);
     }
 
-    public function testGetNestedDirectories()
+    public function testGetReturnsNestedDirectoriesAndDemonstratesInfiniteRecursion()
     {
         $directoryRepository = new DirectoryRepository();
         $navDirectory = new NavDirectory($directoryRepository);

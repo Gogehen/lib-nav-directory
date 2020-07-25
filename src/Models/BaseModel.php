@@ -6,7 +6,10 @@ namespace PhpSquad\NavDirectory\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-require 'config/database.php';
+if ($_ENV["APP_ENV"] == 'testing'){
+    require 'config/database.php';
+}
+
 
 class BaseModel extends Model
 {

@@ -14,19 +14,32 @@ class NavDirectory
         $this->directoryRepository = $directoryRepository;
     }
 
-    public function create($accountId, $parentId, $type, $name): Directory
-    {
-        return $this->directoryRepository->create($accountId, $parentId, $type, $name);
+    public function create(
+        string $accountId,
+        string $userId,
+        ?string $parentId,
+        string $type,
+        string $name,
+        string $icon
+    ): Directory {
+        return $this->directoryRepository->create($accountId, $userId, $parentId, $type, $name, $icon);
     }
 
-    public function getDirectories(string $accountId)
+    public function list(string $accountId, string $rootId)
     {
-        return $this->directoryRepository->getDirectories($accountId);
+        return $this->directoryRepository->list($accountId, $rootId);
     }
 
-    public function update(object $data)
-    {
-        return $this->directoryRepository->update($data);
+    public function update(
+        string $id,
+        string $accountId,
+        string $userId,
+        ?string $parentId,
+        string $type,
+        string $name,
+        string $icon
+    ) {
+        return $this->directoryRepository->update($id, $accountId, $userId, $parentId, $type, $name, $icon);
     }
 
 }

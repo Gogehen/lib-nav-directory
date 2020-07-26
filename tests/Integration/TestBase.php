@@ -15,9 +15,11 @@ Trait TestBase
         Manager::schema()->create(self::NAV_DIRECTORY_TABLE, function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->uuid('account_id');
+            $table->uuid('user_id');
             $table->string('type');
             $table->string('name');
             $table->uuid('parent_id');
+            $table->string('icon')->default('none');
             $table->timestamps();
         });
     }

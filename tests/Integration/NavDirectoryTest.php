@@ -27,8 +27,10 @@ class NavDirectoryTest extends TestCase
     {
         $directoryRepository = new DirectoryRepository();
         $directoryCreator = new NavDirectory($directoryRepository);
+        $userId = 'user-one-uuid';
+        $icon = 'mdi-folder';
 
-        $directoryCreator->create('my-uuid', 'parent-uuid-1', 'team', 'Rocket Team');
+        $directoryCreator->create('my-uuid', $userId, 'parent-uuid-1', 'team', 'Rocket Team', $icon);
 
         $record = $this->database->table(self::NAV_DIRECTORY_TABLE)
             ->select('name')
@@ -45,66 +47,117 @@ class NavDirectoryTest extends TestCase
         $accountId = 'my-uuid';
         $teamDirName = 'Rocket Team';
         $teamDirType = 'team';
-        $baseElementId = "base_nav_element";
+        $rootId = "base_nav_element";
+        $userId = 'user-one-uuid';
+        $icon = 'mdi-folder';
 
-        $teamDir = $navDirectory->create($accountId, null, $teamDirType, $teamDirName);
+        $teamDir = $navDirectory->create(
+            $accountId,
+            $userId,
+            null,
+            $teamDirType,
+            $teamDirName,
+            $icon
+        );
+
         $teamId = $teamDir->id;
         $createdAt = $teamDir->created_at;
 
-
         $projectDirName = 'Rocket Project';
         $projectDirType = 'project';
-        $projectDir = $navDirectory->create($accountId, $teamId, $projectDirType, $projectDirName);
+        $projectDir = $navDirectory->create(
+            $accountId,
+            $userId,
+            $teamId,
+            $projectDirType,
+            $projectDirName,
+            $icon
+        );
+
         $projectId = $projectDir->id;
 
         $rocketFolderDirName = 'Rocket Folder';
         $rocketFolderDirType = 'folder';
-        $folderDir = $navDirectory->create($accountId, $projectId, $rocketFolderDirType, $rocketFolderDirName);
+        $folderDir = $navDirectory->create(
+            $accountId,
+            $userId,
+            $projectId,
+            $rocketFolderDirType,
+            $rocketFolderDirName,
+            $icon
+        );
         $rocketFolderId = $folderDir->id;
 
         $shipFolderDirName = 'Ship Folder';
         $shipFolderDirType = 'folder';
-        $folderDir = $navDirectory->create($accountId, $projectId, $shipFolderDirType, $shipFolderDirName);
+        $folderDir = $navDirectory->create(
+            $accountId,
+            $userId,
+            $projectId,
+            $shipFolderDirType,
+            $shipFolderDirName,
+            $icon
+        );
         $shipFolderId = $folderDir->id;
 
         $subShipFolderDirName = 'Sub Ship Folder';
         $subShipFolderDirType = 'folder';
-        $folderDir = $navDirectory->create($accountId, $shipFolderId, $subShipFolderDirType, $subShipFolderDirName);
+        $folderDir = $navDirectory->create(
+            $accountId,
+            $userId,
+            $shipFolderId,
+            $subShipFolderDirType,
+            $subShipFolderDirName,
+            $icon
+        );
         $subShipFolderId = $folderDir->id;
 
         $subSubShipFolderDirName = 'Sub-Sub Ship Folder';
         $subSubShipFolderDirType = 'folder';
-        $folderDir = $navDirectory->create($accountId, $subShipFolderId, $subSubShipFolderDirType, $subSubShipFolderDirName);
+        $folderDir = $navDirectory->create(
+            $accountId,
+            $userId,
+            $subShipFolderId,
+            $subSubShipFolderDirType,
+            $subSubShipFolderDirName,
+            $icon
+        );
         $subSubShipFolderId = $folderDir->id;
 
-        $directories = $navDirectory->getDirectories($accountId);
+        $directories = $navDirectory->list($accountId, $rootId);
 
         $this->assertJsonStringEqualsJsonString(
             json_encode([
                 [
                     "id" => $teamId,
                     "account_id" => $accountId,
+                    "user_id" => $userId,
                     "type" => $teamDirType,
                     "name" => $teamDirName,
-                    "parent_id" => $baseElementId,
+                    "parent_id" => $rootId,
+                    "icon" => $icon,
                     "created_at" => $createdAt,
                     "updated_at" => $createdAt,
                     "children" => [
                         [
                             "id" => $projectId,
                             "account_id" => $accountId,
+                            "user_id" => $userId,
                             "type" => $projectDirType,
                             "name" => $projectDirName,
                             "parent_id" => $teamId,
+                            "icon" => $icon,
                             "created_at" => $createdAt,
                             "updated_at" => $createdAt,
                             "children" => [
                                 [
                                     "id" => $rocketFolderId,
                                     "account_id" => $accountId,
+                                    "user_id" => $userId,
                                     "type" => $rocketFolderDirType,
                                     "name" => $rocketFolderDirName,
                                     "parent_id" => $projectId,
+                                    "icon" => $icon,
                                     "created_at" => $createdAt,
                                     "updated_at" => $createdAt,
                                     "children" => []
@@ -113,27 +166,33 @@ class NavDirectoryTest extends TestCase
                                 [
                                     "id" => $shipFolderId,
                                     "account_id" => $accountId,
+                                    "user_id" => $userId,
                                     "type" => $shipFolderDirType,
                                     "name" => $shipFolderDirName,
                                     "parent_id" => $projectId,
+                                    "icon" => $icon,
                                     "created_at" => $createdAt,
                                     "updated_at" => $createdAt,
                                     "children" => [
                                         [
                                             "id" => $subShipFolderId,
                                             "account_id" => $accountId,
+                                            "user_id" => $userId,
                                             "type" => $subShipFolderDirType,
                                             "name" => $subShipFolderDirName,
                                             "parent_id" => $shipFolderId,
+                                            "icon" => $icon,
                                             "created_at" => $createdAt,
                                             "updated_at" => $createdAt,
                                             "children" => [
                                                 [
                                                     "id" => $subSubShipFolderId,
                                                     "account_id" => $accountId,
+                                                    "user_id" => $userId,
                                                     "type" => $subSubShipFolderDirType,
                                                     "name" => $subSubShipFolderDirName,
                                                     "parent_id" => $subShipFolderId,
+                                                    "icon" => $icon,
                                                     "created_at" => $createdAt,
                                                     "updated_at" => $createdAt,
                                                     "children" => []
@@ -157,60 +216,66 @@ class NavDirectoryTest extends TestCase
         $accountId = 'my-uuid';
         $teamDirName = 'Rocket Team';
         $teamDirType = 'team';
-        $baseElementId = "base_nav_element";
+        $rootId = "base_nav_element";
+        $userId = 'user-one-uuid';
+        $icon = 'mdi-folder';
 
-        $teamDir = $navDirectory->create($accountId, null, $teamDirType, $teamDirName);
+
+        $teamDir = $navDirectory->create($accountId, $userId, $rootId, $teamDirType, $teamDirName, $icon);
         $teamId = $teamDir->id;
         $createdAt = $teamDir->created_at;
 
 
         $projectDirName = 'Rocket Project';
         $projectDirType = 'project';
-        $projectDir = $navDirectory->create($accountId, $teamId, $projectDirType, $projectDirName);
+        $projectDir = $navDirectory->create($accountId, $userId, $teamId, $projectDirType, $projectDirName, $icon);
         $projectId = $projectDir->id;
-
-        $projectDirName2 = 'Ship Project';
-        $projectDirType2 = 'project';
-        $projectDir2 = $navDirectory->create($accountId, $teamId, $projectDirType2, $projectDirName2);
-        $projectId2 = $projectDir2->id;
 
         $folderDirName = 'Rocket Folder';
         $folderDirType = 'folder';
-        $folderDir = $navDirectory->create($accountId, $projectId, $folderDirType, $folderDirName);
+        $folderDir = $navDirectory->create($accountId, $userId, $projectId, $folderDirType, $folderDirName, $icon);
         $folderId = $folderDir->id;
+
+        $projectDirName2 = 'Ship Project';
+        $projectDirType2 = 'project';
+        $projectDir2 = $navDirectory->create($accountId, $userId, $teamId, $projectDirType2, $projectDirName2, $icon);
+        $projectId2 = $projectDir2->id;
 
         $newFolderDirName = 'Updated Folder Name';
 
-        $data = (object) [
-            'accountId' => $accountId,
-            'id' => $folderId,
-            'parentId' => $projectId2,
-            'type' => $folderDirType,
-            'name' => $newFolderDirName
-        ];
+        $navDirectory->update(
+            $folderId,
+            $accountId,
+            $userId,
+            $projectId2,
+            $folderDirType,
+            $newFolderDirName,
+            $icon
+        );
 
-        $navDirectory->update($data);
-
-
-        $directories = $navDirectory->getDirectories($accountId);
+        $directories = $navDirectory->list($accountId, $rootId);
 
         $this->assertJsonStringEqualsJsonString(
             json_encode([
                 [
                     "id" => $teamId,
                     "account_id" => $accountId,
+                    "user_id" => $userId,
                     "type" => $teamDirType,
                     "name" => $teamDirName,
-                    "parent_id" => $baseElementId,
+                    "parent_id" => $rootId,
+                    "icon" => $icon,
                     "created_at" => $createdAt,
                     "updated_at" => $createdAt,
                     "children" => [
                         [
                             "id" => $projectId,
                             "account_id" => $accountId,
+                            "user_id" => $userId,
                             "type" => $projectDirType,
                             "name" => $projectDirName,
                             "parent_id" => $teamId,
+                            "icon" => $icon,
                             "created_at" => $createdAt,
                             "updated_at" => $createdAt,
                             "children" => []
@@ -218,18 +283,22 @@ class NavDirectoryTest extends TestCase
                         [
                             "id" => $projectId2,
                             "account_id" => $accountId,
+                            "user_id" => $userId,
                             "type" => $projectDirType2,
                             "name" => $projectDirName2,
                             "parent_id" => $teamId,
+                            "icon" => $icon,
                             "created_at" => $createdAt,
                             "updated_at" => $createdAt,
                             "children" => [
                                 [
                                     "id" => $folderId,
                                     "account_id" => $accountId,
+                                    "user_id" => $userId,
                                     "type" => $folderDirType,
                                     "name" => $newFolderDirName,
                                     "parent_id" => $projectId2,
+                                    "icon" => $icon,
                                     "created_at" => $createdAt,
                                     "updated_at" => $createdAt,
                                     "children" => [],

@@ -6,13 +6,15 @@ use PhpSquad\NavDirectory\Models\Directory;
 
 class DirectoryRepository
 {
-    public function create(string $accountId, ?string $parentId, string $type, string $name): Directory
+    public function create(string $accountId, string $userId, ?string $parentId, string $type, string $name, string $icon): Directory
     {
         $parentId = $parentId ? $parentId : 'base_nav_element';
 
         $dir = new Directory();
         $dir->account_id = $accountId;
+        $dir->user_id = $userId;
         $dir->parent_id = $parentId;
+        $dir->icon = $icon;
         $dir->type = $type;
         $dir->name =$name;
         $dir->save();
@@ -20,21 +22,23 @@ class DirectoryRepository
         return $dir;
     }
 
-    public function getDirectories(string $accountId)
+    public function list(string $accountId, string $rootId)
     {
         return Directory::where('account_id', '=', $accountId)
-            ->where('parent_id', '=', 'base_nav_element')
+            ->where('parent_id', '=', $rootId)
             ->with('children')
             ->get();
     }
 
-    public function update(object $data)
+    public function update(string $id, string $accountId, string $userId, ?string $parentId, string $type, string $name, string $icon)
     {
-        $dir = Directory::find($data->id);
-        $dir->account_id = $data->accountId;
-        $dir->parent_id = $data->parentId;
-        $dir->type = $data->type;
-        $dir->name =$data->name;
+        $dir = Directory::find($id);
+        $dir->account_id = $accountId;
+        $dir->user_id = $userId;
+        $dir->parent_id = $parentId;
+        $dir->type = $type;
+        $dir->name = $name;
+        $dir->icon = $icon;
         $dir->save();
 
         return $dir;

@@ -4,12 +4,12 @@ namespace PhpSquad\NavDirectory\Tests\Integration;
 
 use Illuminate\Database\Capsule\Manager;
 use PhpSquad\NavDirectory\Repositories\DirectoryRepository;
-use PhpSquad\NavDirectory\Services\NavDirectory;
+use PhpSquad\NavDirectory\Services\Folder;
 use PhpSquad\NavDirectory\Tests\TestDatabase;
 use PHPUnit\Framework\TestCase;
 
 
-class NavDirectoryTest extends TestCase
+class FolderTest extends TestCase
 {
     use TestBase;
 
@@ -26,7 +26,7 @@ class NavDirectoryTest extends TestCase
     public function testCreateDirectory()
     {
         $directoryRepository = new DirectoryRepository();
-        $directoryCreator = new NavDirectory($directoryRepository);
+        $directoryCreator = new Folder($directoryRepository);
         $userId = 'user-one-uuid';
         $icon = 'mdi-folder';
 
@@ -42,7 +42,7 @@ class NavDirectoryTest extends TestCase
     public function testGetReturnsNestedDirectoriesAndDemonstratesInfiniteRecursion()
     {
         $directoryRepository = new DirectoryRepository();
-        $navDirectory = new NavDirectory($directoryRepository);
+        $navDirectory = new Folder($directoryRepository);
 
         $accountId = 'my-uuid';
         $teamDirName = 'Rocket Team';
@@ -211,7 +211,7 @@ class NavDirectoryTest extends TestCase
     public function testUpdateWithMoveToDifferentParent()
     {
         $directoryRepository = new DirectoryRepository();
-        $navDirectory = new NavDirectory($directoryRepository);
+        $navDirectory = new Folder($directoryRepository);
 
         $accountId = 'my-uuid';
         $teamDirName = 'Rocket Team';
